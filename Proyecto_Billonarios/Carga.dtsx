@@ -1,0 +1,2662 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/21/2024 8:24:16 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="XAVIERLAP"
+  DTS:CreatorName="XAVIERLAP\xavie"
+  DTS:DTSID="{147906BB-8C87-47BD-BC74-5B1BFF33F932}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="2058"
+  DTS:ObjectName="Carga"
+  DTS:PackageType="5"
+  DTS:VersionBuild="21"
+  DTS:VersionGUID="{507FB2EB-C3A7-49E1-A2ED-559E69CCAE92}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Administrador de conexiones con Excel]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{8B0A387C-974E-4893-9D7E-54A50BE78FE0}"
+      DTS:ObjectName="Administrador de conexiones con Excel">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="0"
+          DTS:ConnectRetryInterval="0"
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\xavie\Downloads\Billionaires Statistics 1.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[XAVIERLAP\SQLEXPRESS.Billonarios]"
+      DTS:CreationName="ADO.NET:System.Data.OleDb.OleDbConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{083D2DD8-355D-4309-BF55-EDCCD237CB1A}"
+      DTS:ObjectName="XAVIERLAP\SQLEXPRESS.Billonarios">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=XAVIERLAP\SQLEXPRESS;Initial Catalog=Billonarios;Provider=SQLNCLI11.1;Integrated Security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Carga XLS"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{283BB286-1A30-468C-A47B-85E1D2D51752}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Carga XLS"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Carga XLS\Destino de ADO NET"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Carga datos en una base de datos compatible con ADO.NET que use una vista o tabla de base de datos. Se cargan datos en una tabla nueva o existente. Por ejemplo, se usa un proveedor ADO.NET para ODBC para cargar datos en un destino ODBC.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;2"
+              description="Carga datos en una base de datos compatible con ADO.NET que use una vista o tabla de base de datos. Se cargan datos en una tabla nueva o existente. Por ejemplo, se usa un proveedor ADO.NET para ODBC para cargar datos en un destino ODBC."
+              name="Destino de ADO NET"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Nombre de la tabla de la base de datos de destino."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">[XLS_Billonarios]</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifique el número de filas por lote. El valor predeterminado es 0, que utiliza el mismo tamaño que el búfer interno de SSIS. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Especifica si se debe usar la interfaz SqlBulkCopy para mejorar el rendimiento de las operaciones de inserción masiva. No todos los proveedores admiten esta interfaz."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Carga XLS\Destino de ADO NET.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[XAVIERLAP\SQLEXPRESS.Billonarios]"
+                  connectionManagerRefId="Package.ConnectionManagers[XAVIERLAP\SQLEXPRESS.Billonarios]"
+                  description="Administrador de conexiones administrado"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Entrada de destino de ADO NET">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[rank]"
+                      cachedDataType="r8"
+                      cachedName="rank"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[rank]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[rank]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[finalWorth]"
+                      cachedDataType="r8"
+                      cachedName="finalWorth"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[finalWorth]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[finalWorth]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[category]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="category"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[category]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[category]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[personName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="personName"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[personName]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[personName]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[age]"
+                      cachedDataType="r8"
+                      cachedName="age"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[age]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[age]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[country]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="country"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[country]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[country]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[city]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="city"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[city]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[city]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[source]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="source"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[source]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[source]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[industries]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="industries"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[industries]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[industries]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[countryOfCitizenship]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="countryOfCitizenship"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[countryOfCitizenship]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[countryOfCitizenship]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[organization]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="organization"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[organization]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[organization]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[selfMade]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="selfMade"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[selfMade]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[selfMade]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[status]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="status"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[status]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[status]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[gender]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="gender"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[gender]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[gender]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[birthDate]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="birthDate"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[birthDate]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[birthDate]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[lastName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="lastName"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[lastName]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[lastName]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[firstName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="firstName"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[firstName]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[firstName]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[title]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="title"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[title]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[title]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[date]"
+                      cachedDataType="date"
+                      cachedName="date"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[date]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[date]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[state]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="state"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[state]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[state]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[residenceStateRegion]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="residenceStateRegion"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[residenceStateRegion]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[residenceStateRegion]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[birthYear]"
+                      cachedDataType="r8"
+                      cachedName="birthYear"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[birthYear]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[birthYear]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[birthMonth]"
+                      cachedDataType="r8"
+                      cachedName="birthMonth"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[birthMonth]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[birthMonth]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[birthDay]"
+                      cachedDataType="r8"
+                      cachedName="birthDay"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[birthDay]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[birthDay]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[cpi_country]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="cpi_country"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[cpi_country]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[cpi_country]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[cpi_change_country]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="cpi_change_country"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[cpi_change_country]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[cpi_change_country]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[gdp_country]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="gdp_country"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[gdp_country]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[gdp_country]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[gross_tertiary_education_enrollment]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="gross_tertiary_education_enrollment"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[gross_tertiary_education_enrollment]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[gross_tertiary_education_enrollment]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[gross_primary_education_enrollment_country]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="gross_primary_education_enrollment_country"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[gross_primary_education_enrollment_country]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[gross_primary_education_enrollment_country]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[life_expectancy_country]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="life_expectancy_country"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[life_expectancy_country]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[life_expectancy_country]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[tax_revenue_country_country]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="tax_revenue_country_country"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[tax_revenue_country_country]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[tax_revenue_country_country]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[total_tax_rate_country]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="total_tax_rate_country"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[total_tax_rate_country]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[total_tax_rate_country]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[population_country]"
+                      cachedDataType="r8"
+                      cachedName="population_country"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[population_country]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[population_country]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[latitude_country]"
+                      cachedDataType="r8"
+                      cachedName="latitude_country"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[latitude_country]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[latitude_country]" />
+                    <inputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[longitude_country]"
+                      cachedDataType="r8"
+                      cachedName="longitude_country"
+                      externalMetadataColumnId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[longitude_country]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[longitude_country]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[rank]"
+                      dataType="r8"
+                      name="rank" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[finalWorth]"
+                      dataType="r8"
+                      name="finalWorth" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[category]"
+                      dataType="wstr"
+                      length="255"
+                      name="category" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[personName]"
+                      dataType="wstr"
+                      length="255"
+                      name="personName" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[age]"
+                      dataType="r8"
+                      name="age" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[country]"
+                      dataType="wstr"
+                      length="255"
+                      name="country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[city]"
+                      dataType="wstr"
+                      length="255"
+                      name="city" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[source]"
+                      dataType="wstr"
+                      length="255"
+                      name="source" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[industries]"
+                      dataType="wstr"
+                      length="255"
+                      name="industries" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[countryOfCitizenship]"
+                      dataType="wstr"
+                      length="255"
+                      name="countryOfCitizenship" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[organization]"
+                      dataType="wstr"
+                      length="255"
+                      name="organization" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[selfMade]"
+                      dataType="wstr"
+                      length="255"
+                      name="selfMade" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[status]"
+                      dataType="wstr"
+                      length="255"
+                      name="status" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[gender]"
+                      dataType="wstr"
+                      length="255"
+                      name="gender" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[birthDate]"
+                      dataType="wstr"
+                      length="255"
+                      name="birthDate" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[lastName]"
+                      dataType="wstr"
+                      length="255"
+                      name="lastName" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[firstName]"
+                      dataType="wstr"
+                      length="255"
+                      name="firstName" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[title]"
+                      dataType="wstr"
+                      length="255"
+                      name="title" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[date]"
+                      dataType="dbTimeStamp"
+                      name="date" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[state]"
+                      dataType="wstr"
+                      length="255"
+                      name="state" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[residenceStateRegion]"
+                      dataType="wstr"
+                      length="255"
+                      name="residenceStateRegion" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[birthYear]"
+                      dataType="r8"
+                      name="birthYear" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[birthMonth]"
+                      dataType="r8"
+                      name="birthMonth" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[birthDay]"
+                      dataType="r8"
+                      name="birthDay" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[cpi_country]"
+                      dataType="wstr"
+                      length="255"
+                      name="cpi_country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[cpi_change_country]"
+                      dataType="wstr"
+                      length="255"
+                      name="cpi_change_country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[gdp_country]"
+                      dataType="wstr"
+                      length="255"
+                      name="gdp_country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[gross_tertiary_education_enrollment]"
+                      dataType="wstr"
+                      length="255"
+                      name="gross_tertiary_education_enrollment" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[gross_primary_education_enrollment_country]"
+                      dataType="wstr"
+                      length="255"
+                      name="gross_primary_education_enrollment_country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[life_expectancy_country]"
+                      dataType="wstr"
+                      length="255"
+                      name="life_expectancy_country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[tax_revenue_country_country]"
+                      dataType="wstr"
+                      length="255"
+                      name="tax_revenue_country_country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[total_tax_rate_country]"
+                      dataType="wstr"
+                      length="255"
+                      name="total_tax_rate_country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[population_country]"
+                      dataType="r8"
+                      name="population_country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[latitude_country]"
+                      dataType="r8"
+                      name="latitude_country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[longitude_country]"
+                      dataType="r8"
+                      name="longitude_country" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Carga XLS\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de destino de ADO NET"
+                  synchronousInputId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Carga XLS\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Carga XLS\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Carga XLS\Excel Source"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">'Billionaires Statistics Dataset$'</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Carga XLS\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Administrador de conexiones con Excel]"
+                  connectionManagerRefId="Package.ConnectionManagers[Administrador de conexiones con Excel]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[rank]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[rank]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[rank]"
+                      name="rank"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[finalWorth]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[finalWorth]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[finalWorth]"
+                      name="finalWorth"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[category]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[category]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[category]"
+                      name="category"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[personName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[personName]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[personName]"
+                      name="personName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[age]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[age]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[age]"
+                      name="age"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[country]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[country]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[country]"
+                      name="country"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[city]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[city]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[city]"
+                      name="city"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[source]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[source]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[source]"
+                      name="source"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[industries]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[industries]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[industries]"
+                      name="industries"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[countryOfCitizenship]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[countryOfCitizenship]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[countryOfCitizenship]"
+                      name="countryOfCitizenship"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[organization]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[organization]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[organization]"
+                      name="organization"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[selfMade]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[selfMade]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[selfMade]"
+                      name="selfMade"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[status]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[status]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[status]"
+                      name="status"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[gender]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[gender]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[gender]"
+                      name="gender"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[birthDate]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[birthDate]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[birthDate]"
+                      name="birthDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[lastName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[lastName]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[lastName]"
+                      name="lastName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[firstName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[firstName]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[firstName]"
+                      name="firstName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[title]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[title]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[title]"
+                      name="title"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[date]"
+                      dataType="date"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[date]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[date]"
+                      name="date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[state]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[state]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[state]"
+                      name="state"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[residenceStateRegion]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[residenceStateRegion]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[residenceStateRegion]"
+                      name="residenceStateRegion"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[birthYear]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[birthYear]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[birthYear]"
+                      name="birthYear"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[birthMonth]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[birthMonth]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[birthMonth]"
+                      name="birthMonth"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[birthDay]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[birthDay]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[birthDay]"
+                      name="birthDay"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[cpi_country]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[cpi_country]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[cpi_country]"
+                      name="cpi_country"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[cpi_change_country]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[cpi_change_country]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[cpi_change_country]"
+                      name="cpi_change_country"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[gdp_country]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[gdp_country]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[gdp_country]"
+                      name="gdp_country"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[gross_tertiary_education_enrollment]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[gross_tertiary_education_enrollment]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[gross_tertiary_education_enrollment]"
+                      name="gross_tertiary_education_enrollment"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[gross_primary_education_enrollment_country]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[gross_primary_education_enrollment_country]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[gross_primary_education_enrollment_country]"
+                      name="gross_primary_education_enrollment_country"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[life_expectancy_country]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[life_expectancy_country]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[life_expectancy_country]"
+                      name="life_expectancy_country"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[tax_revenue_country_country]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[tax_revenue_country_country]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[tax_revenue_country_country]"
+                      name="tax_revenue_country_country"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[total_tax_rate_country]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[total_tax_rate_country]"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[total_tax_rate_country]"
+                      name="total_tax_rate_country"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[population_country]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[population_country]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[population_country]"
+                      name="population_country"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[latitude_country]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[latitude_country]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[latitude_country]"
+                      name="latitude_country"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[longitude_country]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[longitude_country]"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].Columns[longitude_country]"
+                      name="longitude_country"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[rank]"
+                      dataType="r8"
+                      name="rank" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[finalWorth]"
+                      dataType="r8"
+                      name="finalWorth" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[category]"
+                      dataType="wstr"
+                      length="255"
+                      name="category" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[personName]"
+                      dataType="wstr"
+                      length="255"
+                      name="personName" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[age]"
+                      dataType="r8"
+                      name="age" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[country]"
+                      dataType="wstr"
+                      length="255"
+                      name="country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[city]"
+                      dataType="wstr"
+                      length="255"
+                      name="city" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[source]"
+                      dataType="wstr"
+                      length="255"
+                      name="source" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[industries]"
+                      dataType="wstr"
+                      length="255"
+                      name="industries" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[countryOfCitizenship]"
+                      dataType="wstr"
+                      length="255"
+                      name="countryOfCitizenship" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[organization]"
+                      dataType="wstr"
+                      length="255"
+                      name="organization" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[selfMade]"
+                      dataType="wstr"
+                      length="255"
+                      name="selfMade" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[status]"
+                      dataType="wstr"
+                      length="255"
+                      name="status" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[gender]"
+                      dataType="wstr"
+                      length="255"
+                      name="gender" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[birthDate]"
+                      dataType="wstr"
+                      length="255"
+                      name="birthDate" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[lastName]"
+                      dataType="wstr"
+                      length="255"
+                      name="lastName" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[firstName]"
+                      dataType="wstr"
+                      length="255"
+                      name="firstName" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[title]"
+                      dataType="wstr"
+                      length="255"
+                      name="title" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[date]"
+                      dataType="date"
+                      name="date" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[state]"
+                      dataType="wstr"
+                      length="255"
+                      name="state" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[residenceStateRegion]"
+                      dataType="wstr"
+                      length="255"
+                      name="residenceStateRegion" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[birthYear]"
+                      dataType="r8"
+                      name="birthYear" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[birthMonth]"
+                      dataType="r8"
+                      name="birthMonth" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[birthDay]"
+                      dataType="r8"
+                      name="birthDay" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[cpi_country]"
+                      dataType="wstr"
+                      length="255"
+                      name="cpi_country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[cpi_change_country]"
+                      dataType="wstr"
+                      length="255"
+                      name="cpi_change_country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[gdp_country]"
+                      dataType="wstr"
+                      length="255"
+                      name="gdp_country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[gross_tertiary_education_enrollment]"
+                      dataType="wstr"
+                      length="255"
+                      name="gross_tertiary_education_enrollment" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[gross_primary_education_enrollment_country]"
+                      dataType="wstr"
+                      length="255"
+                      name="gross_primary_education_enrollment_country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[life_expectancy_country]"
+                      dataType="wstr"
+                      length="255"
+                      name="life_expectancy_country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[tax_revenue_country_country]"
+                      dataType="wstr"
+                      length="255"
+                      name="tax_revenue_country_country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[total_tax_rate_country]"
+                      dataType="wstr"
+                      length="255"
+                      name="total_tax_rate_country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[population_country]"
+                      dataType="r8"
+                      name="population_country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[latitude_country]"
+                      dataType="r8"
+                      name="latitude_country" />
+                    <externalMetadataColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output].ExternalColumns[longitude_country]"
+                      dataType="r8"
+                      name="longitude_country" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[rank]"
+                      dataType="r8"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[rank]"
+                      name="rank" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[finalWorth]"
+                      dataType="r8"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[finalWorth]"
+                      name="finalWorth" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[category]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[category]"
+                      name="category" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[personName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[personName]"
+                      name="personName" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[age]"
+                      dataType="r8"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[age]"
+                      name="age" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[country]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[country]"
+                      name="country" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[city]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[city]"
+                      name="city" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[source]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[source]"
+                      name="source" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[industries]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[industries]"
+                      name="industries" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[countryOfCitizenship]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[countryOfCitizenship]"
+                      name="countryOfCitizenship" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[organization]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[organization]"
+                      name="organization" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[selfMade]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[selfMade]"
+                      name="selfMade" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[status]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[status]"
+                      name="status" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[gender]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[gender]"
+                      name="gender" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[birthDate]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[birthDate]"
+                      name="birthDate" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[lastName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[lastName]"
+                      name="lastName" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[firstName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[firstName]"
+                      name="firstName" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[title]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[title]"
+                      name="title" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[date]"
+                      dataType="date"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[date]"
+                      name="date" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[state]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[state]"
+                      name="state" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[residenceStateRegion]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[residenceStateRegion]"
+                      name="residenceStateRegion" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[birthYear]"
+                      dataType="r8"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[birthYear]"
+                      name="birthYear" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[birthMonth]"
+                      dataType="r8"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[birthMonth]"
+                      name="birthMonth" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[birthDay]"
+                      dataType="r8"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[birthDay]"
+                      name="birthDay" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[cpi_country]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[cpi_country]"
+                      name="cpi_country" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[cpi_change_country]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[cpi_change_country]"
+                      name="cpi_change_country" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[gdp_country]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[gdp_country]"
+                      name="gdp_country" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[gross_tertiary_education_enrollment]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[gross_tertiary_education_enrollment]"
+                      name="gross_tertiary_education_enrollment" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[gross_primary_education_enrollment_country]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[gross_primary_education_enrollment_country]"
+                      name="gross_primary_education_enrollment_country" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[life_expectancy_country]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[life_expectancy_country]"
+                      name="life_expectancy_country" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[tax_revenue_country_country]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[tax_revenue_country_country]"
+                      name="tax_revenue_country_country" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[total_tax_rate_country]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[total_tax_rate_country]"
+                      name="total_tax_rate_country" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[population_country]"
+                      dataType="r8"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[population_country]"
+                      name="population_country" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[latitude_country]"
+                      dataType="r8"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[latitude_country]"
+                      name="latitude_country" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[longitude_country]"
+                      dataType="r8"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[longitude_country]"
+                      name="longitude_country" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Carga XLS\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Carga XLS.Paths[Excel Source Output]"
+              endId="Package\Carga XLS\Destino de ADO NET.Inputs[Entrada de destino de ADO NET]"
+              name="Excel Source Output"
+              startId="Package\Carga XLS\Excel Source.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DimDate"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{96348CC9-EED6-443D-BA79-B7425FA35260}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DimDate"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DimDate\Origen de ADO NET"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consume datos de SQL Server, OLE DB, ODBC u Oracle mediante el correspondiente proveedor de datos de .NET Framework. Se usa una instrucción Transact-SQL para definir el conjunto de resultados. Por ejemplo, se extraen datos de SQL Server con el proveedor de datos de .NET Framework para SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;4"
+              description="Consume datos de SQL Server, OLE DB, ODBC u Oracle mediante el correspondiente proveedor de datos de .NET Framework. Se usa una instrucción Transact-SQL para definir el conjunto de resultados. Por ejemplo, se extraen datos de SQL Server con el proveedor de datos de .NET Framework para SQL Server."
+              name="Origen de ADO NET"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Especifica la instrucción SQL utilizada por el componente para extraer datos."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indica si se debe permitir que columnas externas que no sean de cadenas se conviertan implícitamente en cadenas en las columnas de salida."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="Nombre de la tabla de la base de datos de origen."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Especificar el modo de recuperar información de columnas externas"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DimDate\Origen de ADO NET.Connections[IDbConnection]"
+                  description="Administrador de conexiones administrado"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DimDate\Origen de ADO NET.Outputs[Salida de origen de ADO NET]"
+                  name="Salida de origen de ADO NET">
+                  <externalMetadataColumns
+                    isUsed="True" />
+                </output>
+                <output
+                  refId="Package\DimDate\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET]"
+                  isErrorOut="true"
+                  name="Salida de error de origen de ADO NET">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DimDate\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DimDate\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DimDate\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DimDate\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DimLocation"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{6F578F3B-7862-4218-86C3-4D6389F5F4A2}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DimLocation"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DimLocation\Destino de ADO NET"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Carga datos en una base de datos compatible con ADO.NET que use una vista o tabla de base de datos. Se cargan datos en una tabla nueva o existente. Por ejemplo, se usa un proveedor ADO.NET para ODBC para cargar datos en un destino ODBC.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;2"
+              description="Carga datos en una base de datos compatible con ADO.NET que use una vista o tabla de base de datos. Se cargan datos en una tabla nueva o existente. Por ejemplo, se usa un proveedor ADO.NET para ODBC para cargar datos en un destino ODBC."
+              name="Destino de ADO NET"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Nombre de la tabla de la base de datos de destino."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">[dbo].[Dim_Location]</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifique el número de filas por lote. El valor predeterminado es 0, que utiliza el mismo tamaño que el búfer interno de SSIS. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Especifica si se debe usar la interfaz SqlBulkCopy para mejorar el rendimiento de las operaciones de inserción masiva. No todos los proveedores admiten esta interfaz."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DimLocation\Destino de ADO NET.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[XAVIERLAP\SQLEXPRESS.Billonarios]"
+                  connectionManagerRefId="Package.ConnectionManagers[XAVIERLAP\SQLEXPRESS.Billonarios]"
+                  description="Administrador de conexiones administrado"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DimLocation\Destino de ADO NET.Inputs[Entrada de destino de ADO NET]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Entrada de destino de ADO NET">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DimLocation\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[City]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="City"
+                      externalMetadataColumnId="Package\DimLocation\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[city]"
+                      lineageId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[City]" />
+                    <inputColumn
+                      refId="Package\DimLocation\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[Country]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Country"
+                      externalMetadataColumnId="Package\DimLocation\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[country]"
+                      lineageId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Country]" />
+                    <inputColumn
+                      refId="Package\DimLocation\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[Latitude]"
+                      cachedDataType="r8"
+                      cachedName="Latitude"
+                      externalMetadataColumnId="Package\DimLocation\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[latitude]"
+                      lineageId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Latitude]" />
+                    <inputColumn
+                      refId="Package\DimLocation\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[Longitude]"
+                      cachedDataType="r8"
+                      cachedName="Longitude"
+                      externalMetadataColumnId="Package\DimLocation\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[longitude]"
+                      lineageId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Longitude]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DimLocation\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[locationId]"
+                      dataType="i4"
+                      name="locationId" />
+                    <externalMetadataColumn
+                      refId="Package\DimLocation\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[country]"
+                      dataType="wstr"
+                      length="100"
+                      name="country" />
+                    <externalMetadataColumn
+                      refId="Package\DimLocation\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[city]"
+                      dataType="wstr"
+                      length="100"
+                      name="city" />
+                    <externalMetadataColumn
+                      refId="Package\DimLocation\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[latitude]"
+                      dataType="r8"
+                      name="latitude" />
+                    <externalMetadataColumn
+                      refId="Package\DimLocation\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[longitude]"
+                      dataType="r8"
+                      name="longitude" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DimLocation\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de destino de ADO NET"
+                  synchronousInputId="Package\DimLocation\Destino de ADO NET.Inputs[Entrada de destino de ADO NET]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DimLocation\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DimLocation\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DimLocation\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DimLocation\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DimLocation\Origen de ADO NET"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consume datos de SQL Server, OLE DB, ODBC u Oracle mediante el correspondiente proveedor de datos de .NET Framework. Se usa una instrucción Transact-SQL para definir el conjunto de resultados. Por ejemplo, se extraen datos de SQL Server con el proveedor de datos de .NET Framework para SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;4"
+              description="Consume datos de SQL Server, OLE DB, ODBC u Oracle mediante el correspondiente proveedor de datos de .NET Framework. Se usa una instrucción Transact-SQL para definir el conjunto de resultados. Por ejemplo, se extraen datos de SQL Server con el proveedor de datos de .NET Framework para SQL Server."
+              name="Origen de ADO NET"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Especifica la instrucción SQL utilizada por el componente para extraer datos."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT DISTINCT
+    ISNULL(LTRIM(RTRIM([city])), 'Unknown') AS City,
+    ISNULL(LTRIM(RTRIM([country])), 'Unknown') AS Country,
+    ISNULL([countryOfCitizenship], 'Unknown') AS CountryOfCitizenship,
+    ISNULL(CAST([latitude_country] AS FLOAT), 0) AS Latitude,
+    ISNULL(CAST([longitude_country] AS FLOAT), 0) AS Longitude
+FROM [Billonarios].[dbo].[XLS_Billonarios]
+ORDER BY 1;</property>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indica si se debe permitir que columnas externas que no sean de cadenas se conviertan implícitamente en cadenas en las columnas de salida."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="Nombre de la tabla de la base de datos de origen."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Especificar el modo de recuperar información de columnas externas"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DimLocation\Origen de ADO NET.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[XAVIERLAP\SQLEXPRESS.Billonarios]"
+                  connectionManagerRefId="Package.ConnectionManagers[XAVIERLAP\SQLEXPRESS.Billonarios]"
+                  description="Administrador de conexiones administrado"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET]"
+                  name="Salida de origen de ADO NET">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[City]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[City]"
+                      length="255"
+                      lineageId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[City]"
+                      name="City"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Country]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[Country]"
+                      length="255"
+                      lineageId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Country]"
+                      name="Country"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[CountryOfCitizenship]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[CountryOfCitizenship]"
+                      length="255"
+                      lineageId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[CountryOfCitizenship]"
+                      name="CountryOfCitizenship"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Latitude]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[Latitude]"
+                      lineageId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Latitude]"
+                      name="Latitude"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Longitude]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[Longitude]"
+                      lineageId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Longitude]"
+                      name="Longitude"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[City]"
+                      dataType="wstr"
+                      length="255"
+                      name="City" />
+                    <externalMetadataColumn
+                      refId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[Country]"
+                      dataType="wstr"
+                      length="255"
+                      name="Country" />
+                    <externalMetadataColumn
+                      refId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[CountryOfCitizenship]"
+                      dataType="wstr"
+                      length="255"
+                      name="CountryOfCitizenship" />
+                    <externalMetadataColumn
+                      refId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[Latitude]"
+                      dataType="r8"
+                      name="Latitude" />
+                    <externalMetadataColumn
+                      refId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[Longitude]"
+                      dataType="r8"
+                      name="Longitude" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET]"
+                  isErrorOut="true"
+                  name="Salida de error de origen de ADO NET">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[City]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[City]"
+                      name="City" />
+                    <outputColumn
+                      refId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[Country]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[Country]"
+                      name="Country" />
+                    <outputColumn
+                      refId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[CountryOfCitizenship]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[CountryOfCitizenship]"
+                      name="CountryOfCitizenship" />
+                    <outputColumn
+                      refId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[Latitude]"
+                      dataType="r8"
+                      lineageId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[Latitude]"
+                      name="Latitude" />
+                    <outputColumn
+                      refId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[Longitude]"
+                      dataType="r8"
+                      lineageId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[Longitude]"
+                      name="Longitude" />
+                    <outputColumn
+                      refId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DimLocation.Paths[Salida de origen de ADO NET]"
+              endId="Package\DimLocation\Destino de ADO NET.Inputs[Entrada de destino de ADO NET]"
+              name="Salida de origen de ADO NET"
+              startId="Package\DimLocation\Origen de ADO NET.Outputs[Salida de origen de ADO NET]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DimOrganizacion"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{86AC1D46-A643-4F0C-8C8A-FD41A7FDB130}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DimOrganizacion"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DimOrganizacion\Destino de ADO NET"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Carga datos en una base de datos compatible con ADO.NET que use una vista o tabla de base de datos. Se cargan datos en una tabla nueva o existente. Por ejemplo, se usa un proveedor ADO.NET para ODBC para cargar datos en un destino ODBC.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;2"
+              description="Carga datos en una base de datos compatible con ADO.NET que use una vista o tabla de base de datos. Se cargan datos en una tabla nueva o existente. Por ejemplo, se usa un proveedor ADO.NET para ODBC para cargar datos en un destino ODBC."
+              name="Destino de ADO NET"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Nombre de la tabla de la base de datos de destino."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">[dbo].[Dim_Organization]</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifique el número de filas por lote. El valor predeterminado es 0, que utiliza el mismo tamaño que el búfer interno de SSIS. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Especifica si se debe usar la interfaz SqlBulkCopy para mejorar el rendimiento de las operaciones de inserción masiva. No todos los proveedores admiten esta interfaz."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DimOrganizacion\Destino de ADO NET.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[XAVIERLAP\SQLEXPRESS.Billonarios]"
+                  connectionManagerRefId="Package.ConnectionManagers[XAVIERLAP\SQLEXPRESS.Billonarios]"
+                  description="Administrador de conexiones administrado"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DimOrganizacion\Destino de ADO NET.Inputs[Entrada de destino de ADO NET]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Entrada de destino de ADO NET">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DimOrganizacion\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[Category]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Category"
+                      externalMetadataColumnId="Package\DimOrganizacion\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[category]"
+                      lineageId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Category]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DimOrganizacion\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[organizationId]"
+                      dataType="i4"
+                      name="organizationId" />
+                    <externalMetadataColumn
+                      refId="Package\DimOrganizacion\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[name]"
+                      dataType="wstr"
+                      length="255"
+                      name="name" />
+                    <externalMetadataColumn
+                      refId="Package\DimOrganizacion\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[category]"
+                      dataType="wstr"
+                      length="255"
+                      name="category" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DimOrganizacion\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de destino de ADO NET"
+                  synchronousInputId="Package\DimOrganizacion\Destino de ADO NET.Inputs[Entrada de destino de ADO NET]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DimOrganizacion\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DimOrganizacion\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DimOrganizacion\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DimOrganizacion\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DimOrganizacion\Origen de ADO NET"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consume datos de SQL Server, OLE DB, ODBC u Oracle mediante el correspondiente proveedor de datos de .NET Framework. Se usa una instrucción Transact-SQL para definir el conjunto de resultados. Por ejemplo, se extraen datos de SQL Server con el proveedor de datos de .NET Framework para SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;4"
+              description="Consume datos de SQL Server, OLE DB, ODBC u Oracle mediante el correspondiente proveedor de datos de .NET Framework. Se usa una instrucción Transact-SQL para definir el conjunto de resultados. Por ejemplo, se extraen datos de SQL Server con el proveedor de datos de .NET Framework para SQL Server."
+              name="Origen de ADO NET"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Especifica la instrucción SQL utilizada por el componente para extraer datos."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT DISTINCT
+    ISNULL(LTRIM(RTRIM([source])), 'Unknown') AS Source,
+    ISNULL([industries], 'Unknown') AS Industry,
+    ISNULL([category], 'Unknown') AS Category
+FROM [Billonarios].[dbo].[XLS_Billonarios]
+ORDER BY 1;</property>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indica si se debe permitir que columnas externas que no sean de cadenas se conviertan implícitamente en cadenas en las columnas de salida."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="Nombre de la tabla de la base de datos de origen."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Especificar el modo de recuperar información de columnas externas"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DimOrganizacion\Origen de ADO NET.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[XAVIERLAP\SQLEXPRESS.Billonarios]"
+                  connectionManagerRefId="Package.ConnectionManagers[XAVIERLAP\SQLEXPRESS.Billonarios]"
+                  description="Administrador de conexiones administrado"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de origen de ADO NET]"
+                  name="Salida de origen de ADO NET">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Source]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[Source]"
+                      length="255"
+                      lineageId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Source]"
+                      name="Source"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Industry]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[Industry]"
+                      length="255"
+                      lineageId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Industry]"
+                      name="Industry"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Category]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[Category]"
+                      length="255"
+                      lineageId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Category]"
+                      name="Category"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[Source]"
+                      dataType="wstr"
+                      length="255"
+                      name="Source" />
+                    <externalMetadataColumn
+                      refId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[Industry]"
+                      dataType="wstr"
+                      length="255"
+                      name="Industry" />
+                    <externalMetadataColumn
+                      refId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[Category]"
+                      dataType="wstr"
+                      length="255"
+                      name="Category" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET]"
+                  isErrorOut="true"
+                  name="Salida de error de origen de ADO NET">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[Source]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[Source]"
+                      name="Source" />
+                    <outputColumn
+                      refId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[Industry]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[Industry]"
+                      name="Industry" />
+                    <outputColumn
+                      refId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[Category]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[Category]"
+                      name="Category" />
+                    <outputColumn
+                      refId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DimOrganizacion.Paths[Salida de origen de ADO NET]"
+              endId="Package\DimOrganizacion\Destino de ADO NET.Inputs[Entrada de destino de ADO NET]"
+              name="Salida de origen de ADO NET"
+              startId="Package\DimOrganizacion\Origen de ADO NET.Outputs[Salida de origen de ADO NET]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DimPerson"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{15E97C64-7C80-4A88-AAAB-E00B6DC31220}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DimPerson"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DimPerson\Destino de ADO NET"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Carga datos en una base de datos compatible con ADO.NET que use una vista o tabla de base de datos. Se cargan datos en una tabla nueva o existente. Por ejemplo, se usa un proveedor ADO.NET para ODBC para cargar datos en un destino ODBC.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;2"
+              description="Carga datos en una base de datos compatible con ADO.NET que use una vista o tabla de base de datos. Se cargan datos en una tabla nueva o existente. Por ejemplo, se usa un proveedor ADO.NET para ODBC para cargar datos en un destino ODBC."
+              name="Destino de ADO NET"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Nombre de la tabla de la base de datos de destino."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">[dbo].[Dim_Person]</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifique el número de filas por lote. El valor predeterminado es 0, que utiliza el mismo tamaño que el búfer interno de SSIS. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Especifica si se debe usar la interfaz SqlBulkCopy para mejorar el rendimiento de las operaciones de inserción masiva. No todos los proveedores admiten esta interfaz."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DimPerson\Destino de ADO NET.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[XAVIERLAP\SQLEXPRESS.Billonarios]"
+                  connectionManagerRefId="Package.ConnectionManagers[XAVIERLAP\SQLEXPRESS.Billonarios]"
+                  description="Administrador de conexiones administrado"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DimPerson\Destino de ADO NET.Inputs[Entrada de destino de ADO NET]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Entrada de destino de ADO NET">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DimPerson\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[Name]"
+                      cachedDataType="wstr"
+                      cachedLength="511"
+                      cachedName="Name"
+                      externalMetadataColumnId="Package\DimPerson\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[Name]"
+                      lineageId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Name]" />
+                    <inputColumn
+                      refId="Package\DimPerson\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[age]"
+                      cachedDataType="r8"
+                      cachedName="age"
+                      externalMetadataColumnId="Package\DimPerson\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[age]"
+                      lineageId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[age]" />
+                    <inputColumn
+                      refId="Package\DimPerson\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[Gender]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Gender"
+                      externalMetadataColumnId="Package\DimPerson\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[gender]"
+                      lineageId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Gender]" />
+                    <inputColumn
+                      refId="Package\DimPerson\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[title]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="title"
+                      externalMetadataColumnId="Package\DimPerson\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[title]"
+                      lineageId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[title]" />
+                    <inputColumn
+                      refId="Package\DimPerson\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].Columns[Status]"
+                      cachedDataType="wstr"
+                      cachedLength="11"
+                      cachedName="Status"
+                      externalMetadataColumnId="Package\DimPerson\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[Status]"
+                      lineageId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Status]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DimPerson\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[personId]"
+                      dataType="i4"
+                      name="personId" />
+                    <externalMetadataColumn
+                      refId="Package\DimPerson\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[Name]"
+                      dataType="wstr"
+                      length="100"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\DimPerson\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[Status]"
+                      dataType="wstr"
+                      length="100"
+                      name="Status" />
+                    <externalMetadataColumn
+                      refId="Package\DimPerson\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[age]"
+                      dataType="i4"
+                      name="age" />
+                    <externalMetadataColumn
+                      refId="Package\DimPerson\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[gender]"
+                      dataType="wstr"
+                      length="1"
+                      name="gender" />
+                    <externalMetadataColumn
+                      refId="Package\DimPerson\Destino de ADO NET.Inputs[Entrada de destino de ADO NET].ExternalColumns[title]"
+                      dataType="wstr"
+                      length="255"
+                      name="title" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DimPerson\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de destino de ADO NET"
+                  synchronousInputId="Package\DimPerson\Destino de ADO NET.Inputs[Entrada de destino de ADO NET]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DimPerson\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DimPerson\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DimPerson\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DimPerson\Destino de ADO NET.Outputs[Salida de error de destino de ADO NET].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DimPerson\Origen de ADO NET"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consume datos de SQL Server, OLE DB, ODBC u Oracle mediante el correspondiente proveedor de datos de .NET Framework. Se usa una instrucción Transact-SQL para definir el conjunto de resultados. Por ejemplo, se extraen datos de SQL Server con el proveedor de datos de .NET Framework para SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;4"
+              description="Consume datos de SQL Server, OLE DB, ODBC u Oracle mediante el correspondiente proveedor de datos de .NET Framework. Se usa una instrucción Transact-SQL para definir el conjunto de resultados. Por ejemplo, se extraen datos de SQL Server con el proveedor de datos de .NET Framework para SQL Server."
+              name="Origen de ADO NET"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Especifica la instrucción SQL utilizada por el componente para extraer datos."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT distinct ltrim(rtrim( isnull(ltrim(rtrim([firstName])),'')+' '+isnull(ltrim(rtrim([lastName])),'')  )) [Name]
+      ,isnull([age],0) age
+	  ,Gender
+      ,isnull([title],'Undefinated') title
+	  ,case when [status]='U' THEN 'Inherited'
+			when  [status]='D' THEN 'Self-made'
+			ELSE 'Undefinated' end [Status]     
+  FROM [Billonarios].[dbo].[XLS_Billonarios]</property>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indica si se debe permitir que columnas externas que no sean de cadenas se conviertan implícitamente en cadenas en las columnas de salida."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="Nombre de la tabla de la base de datos de origen."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Especificar el modo de recuperar información de columnas externas"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DimPerson\Origen de ADO NET.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[XAVIERLAP\SQLEXPRESS.Billonarios]"
+                  connectionManagerRefId="Package.ConnectionManagers[XAVIERLAP\SQLEXPRESS.Billonarios]"
+                  description="Administrador de conexiones administrado"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET]"
+                  name="Salida de origen de ADO NET">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[Name]"
+                      length="511"
+                      lineageId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Name]"
+                      name="Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[age]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[age]"
+                      lineageId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[age]"
+                      name="age"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Gender]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[Gender]"
+                      length="255"
+                      lineageId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Gender]"
+                      name="Gender"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[title]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[title]"
+                      length="255"
+                      lineageId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[title]"
+                      name="title"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Status]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[Status]"
+                      length="11"
+                      lineageId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].Columns[Status]"
+                      name="Status"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[Name]"
+                      dataType="wstr"
+                      length="511"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[age]"
+                      dataType="r8"
+                      name="age" />
+                    <externalMetadataColumn
+                      refId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[Gender]"
+                      dataType="wstr"
+                      length="255"
+                      name="Gender" />
+                    <externalMetadataColumn
+                      refId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[title]"
+                      dataType="wstr"
+                      length="255"
+                      name="title" />
+                    <externalMetadataColumn
+                      refId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET].ExternalColumns[Status]"
+                      dataType="wstr"
+                      length="11"
+                      name="Status" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET]"
+                  isErrorOut="true"
+                  name="Salida de error de origen de ADO NET">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[Name]"
+                      dataType="wstr"
+                      length="511"
+                      lineageId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[Name]"
+                      name="Name" />
+                    <outputColumn
+                      refId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[age]"
+                      dataType="r8"
+                      lineageId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[age]"
+                      name="age" />
+                    <outputColumn
+                      refId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[Gender]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[Gender]"
+                      name="Gender" />
+                    <outputColumn
+                      refId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[title]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[title]"
+                      name="title" />
+                    <outputColumn
+                      refId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[Status]"
+                      dataType="wstr"
+                      length="11"
+                      lineageId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[Status]"
+                      name="Status" />
+                    <outputColumn
+                      refId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de error de origen de ADO NET].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DimPerson.Paths[Salida de origen de ADO NET]"
+              endId="Package\DimPerson\Destino de ADO NET.Inputs[Entrada de destino de ADO NET]"
+              name="Salida de origen de ADO NET"
+              startId="Package\DimPerson\Origen de ADO NET.Outputs[Salida de origen de ADO NET]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--Esta sección CDATA contiene la información de diseño del paquete. Esta sección incluye información como, por ejemplo, las coordenadas (x,y), el ancho y el alto.-->
+<!--Si edita manualmente esta sección y comete un error, puede eliminarlo. -->
+<!--El paquete podrá cargarse normalmente, pero se perderá la información de diseño anterior y el diseñador reorganizará los elementos automáticamente en la superficie de diseño.-->
+<Objects
+  Version="8">
+  <!--Cada uno de los nodos siguientes contiene propiedades que no afectan al comportamiento en tiempo de ejecución.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="128.8,41.6"
+          Id="Package\Carga XLS"
+          TopLeft="77.1666627509729,47.9666663713586" />
+        <NodeLayout
+          Size="129.6,41.6"
+          Id="Package\DimPerson"
+          TopLeft="217.499988116324,46.7999996745587" />
+        <NodeLayout
+          Size="119.2,41.6"
+          Id="Package\DimDate"
+          TopLeft="80.8333289167949,142.133332344956" />
+        <NodeLayout
+          Size="136,41.6"
+          Id="Package\DimLocation"
+          TopLeft="359.999980330468,52.8666662990385" />
+        <NodeLayout
+          Size="158.4,41.6"
+          Id="Package\DimOrganizacion"
+          TopLeft="344.16664786223,128.266665774716" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Carga XLS">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="140,41.6"
+          Id="Package\Carga XLS\Excel Source"
+          TopLeft="292.166651003891,41.033333086239" />
+        <NodeLayout
+          Size="176.8,41.6"
+          Id="Package\Carga XLS\Destino de ADO NET"
+          TopLeft="273.333318399059,186.333332037595" />
+        <EdgeLayout
+          Id="Package\Carga XLS.Paths[Excel Source Output]"
+          TopLeft="361.949984701475,82.633333086239">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,103.699998951356"
+              Start="0,0"
+              End="0,96.199998951356">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,96.199998951356" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga XLS\Destino de ADO NET">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga XLS\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DimPerson">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="172.8,41.6"
+          Id="Package\DimPerson\Origen de ADO NET"
+          TopLeft="362.999994590878,51.9999992251396" />
+        <NodeLayout
+          Size="176.8,41.6"
+          Id="Package\DimPerson\Destino de ADO NET"
+          TopLeft="360.999994620681,187.999997198582" />
+        <EdgeLayout
+          Id="Package\DimPerson.Paths[Salida de origen de ADO NET]"
+          TopLeft="449.39999460578,93.5999992251396">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,94.3999979734421"
+              Start="0,0"
+              End="0,86.8999979734421">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,86.8999979734421" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DimPerson\Origen de ADO NET">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DimPerson\Destino de ADO NET">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DimDate">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="172.8,41.6"
+          Id="Package\DimDate\Origen de ADO NET"
+          TopLeft="274.999995902181,29.9999995529652" />
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\DimLocation">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="172.8,41.6"
+          Id="Package\DimLocation\Origen de ADO NET"
+          TopLeft="224.999996647239,54.9999991804361" />
+        <NodeLayout
+          Size="176.8,41.6"
+          Id="Package\DimLocation\Destino de ADO NET"
+          TopLeft="225.999996632338,169.999997466803" />
+        <EdgeLayout
+          Id="Package\DimLocation.Paths[Salida de origen de ADO NET]"
+          TopLeft="312.899996639788,96.5999991804361">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,73.3999982863665"
+              Start="0,0"
+              End="0,65.8999982863665">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,65.8999982863665" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DimLocation\Origen de ADO NET">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DimLocation\Destino de ADO NET">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DimOrganizacion">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="172.8,41.6"
+          Id="Package\DimOrganizacion\Origen de ADO NET"
+          TopLeft="255.999996185303,35.9999994635582" />
+        <NodeLayout
+          Size="176.8,41.6"
+          Id="Package\DimOrganizacion\Destino de ADO NET"
+          TopLeft="249.99999627471,148.999997779727" />
+        <EdgeLayout
+          Id="Package\DimOrganizacion.Paths[Salida de origen de ADO NET]"
+          TopLeft="340.399996230006,77.5999994635582">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,71.3999983161687"
+              Start="0,0"
+              End="0,63.8999983161687">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,63.8999983161687" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DimOrganizacion\Origen de ADO NET">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DimOrganizacion\Destino de ADO NET">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
